@@ -1,0 +1,16 @@
+import api from './api';
+
+export const authService = {
+  login: async (credentials) => {
+    return api.post('/auth/login', credentials);
+  },
+  register: async (userData) => {
+    return api.post('/auth/register', userData);
+  },
+  getCurrentUser: async () => {
+    return api.get('/auth/me');
+  },
+  getDemoUsers: async () => {
+    return api.get('/auth/demo-users');
+  }
+};
