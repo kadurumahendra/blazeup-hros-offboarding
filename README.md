@@ -1,84 +1,103 @@
-# Employee Offboarding Automation — BlazeUp HROS
+# ⚡ BlazeUp HROS — Enterprise Offboarding Platform
 
-A full-stack **Employee Offboarding Automation Platform** designed to replace manual and paper-based employee exit processes with a centralized digital workflow.
-
-The system manages employee offboarding through **role-based departmental clearances, configurable workflow stages, checklists, approvals, notifications, access revocation, audit tracking, and official PDF document generation**.
-
-**Tech Stack:** React 18 · Vite · Vanilla CSS · Node.js · Express.js · MongoDB · Mongoose · JWT · bcrypt · PDFKit
+> An enterprise-grade HR operations system that automates employee separation through a **generic workflow engine (parallel & sequential clearances)**, **simulated IT access revocation**, **strict 8-role RBAC**, and **standalone PDF letter generation**.
 
 ---
 
-## Description
+## 🚀 Quick Start (3 Steps)
 
-BlazeUp HROS provides a centralized platform for managing the complete employee exit process.
+```bash
+# 1. Install all dependencies
+npm run install:all
 
-Instead of coordinating employee clearance through emails, spreadsheets, paper forms, and manual follow-ups, HR can initiate an offboarding case and track the entire process from one application.
+# 2. Seed database with multi-role accounts & sample workflow data
+npm run seed
 
-Different departments are responsible for their respective clearance activities:
+# 3. Start both backend (Port 5000) & frontend (Port 5173)
+npm run dev
+```
 
-- **Project / Reporting Manager** — project completion and employee handover
-- **Admin & Systems** — company assets and IT access
-- **Accounts** — financial clearance
-- **Personnel** — ID cards and facility-related items
-- **HR** — final clearance and employee documents
-
-The system ensures that each user can access and perform only the operations allowed by their assigned role.
+- **Frontend App**: [http://localhost:5173](http://localhost:5173)
+- **Backend API**: [http://localhost:5000/api/health](http://localhost:5000/api/health)
 
 ---
 
-## The core idea
+## 🔑 Demo Login Accounts
 
-The main idea of BlazeUp HROS is to use a **configurable workflow engine** instead of hardcoding the employee offboarding process.
+All accounts use password: **`Password123!`**
 
-Each workflow stage can contain:
+| Role | Name | Email | Key Responsibility |
+|---|---|---|---|
+| **HR_ADMIN** | Sarah Jenkins | `hradmin@blazeup.com` | Full HR system control, workflow templates & case initiation |
+| **HR** | Priya Sharma | `hr@blazeup.com` | Operations, exit interview & final clearance sign-off |
+| **MANAGER** | Marcus Vance | `manager@blazeup.com` | Project handover & knowledge transfer clearance |
+| **ADMIN_SYSTEMS** | David Chen | `itadmin@blazeup.com` | Hardware return & 1-click cloud/SSO access revocation |
+| **ACCOUNTS** | Elena Rostova | `accounts@blazeup.com` | Financial dues, advance recovery & finance NOC |
+| **PERSONNEL** | Vikram Mehta | `personnel@blazeup.com` | Physical ID badge & facilities return |
+| **EMPLOYEE** | Rahul Kumar | `rahul.kumar@blazeup.com` | Self-service: track clearance & download release letters |
+| **SUPER_ADMIN** | Alexander Pierce | `superadmin@blazeup.com` | Governance, user administration & security audit logs |
 
-- Assigned role
-- Execution type
-- Dependencies
-- Checklist
-- Approval status
-- Remarks
-- Completion information
+---
 
-The workflow engine evaluates these configurations and determines which stage should become active.
+## 🔄 Clearance Workflow Pipeline
 
-This makes the workflow easier to maintain and extend without changing the core workflow logic.
-
-### Employee offboarding workflow
-
-```text
-HR Initiates Offboarding
+```
+[HR Initiates Offboarding]
           │
           ▼
-Project / Reporting Manager
-          │
-          │ Approved
-          ▼
-┌───────────────────────────────────────┐
-│       Department Clearances           │
-│                                       │
-│  Admin & Systems │ Accounts │ Personnel
-│       │                │          │   │
-└───────┼────────────────┼──────────┼───┘
-        │                │          │
-        └────────────────┼──────────┘
-                         │
-                         ▼
-                  HR Final Clearance
-                         │
-                         │ Approved
-                         ▼
-                  Workflow Completed
-                         │
-                         ▼
-                 Employee → RELIEVED
-                         │
-                         ▼
-                  Official Documents
-Workflow stages
-Level	Department	Execution	Purpose
-1	Project / Reporting Manager	Sequential	Project completion, knowledge transfer and handover
-2	Admin & Systems	Parallel	Assets, IT systems and access clearance
-2	Accounts	Parallel	Financial and account clearance
-2	Personnel	Parallel	ID cards, access cards and facilities
-3	HR Final Clearance	Sequential	Final employee exit approval
+┌────────────────────────────────────────────────────────┐
+│              PARALLEL CLEARANCE STAGES                 │
+│  ├─ Stage 1: Reporting Manager (KT & Code Handover)    │
+│  ├─ Stage 2: IT Systems (Hardware & Access Revocation) │
+│  └─ Stage 3: Finance & Accounts (Settlement & Advances)│
+└─────────────────────────┬──────────────────────────────┘
+                          │ (All 3 Parallel Stages Approved)
+                          ▼
+┌────────────────────────────────────────────────────────┐
+│             SEQUENTIAL CLEARANCE STAGES                │
+│  └─ Stage 4: Personnel & Facilities (Physical ID/RFID) │
+└─────────────────────────┬──────────────────────────────┘
+                          │ (Personnel Approved)
+                          ▼
+┌────────────────────────────────────────────────────────┐
+│  └─ Stage 5: HR Final Clearance & Exit Interview       │
+└─────────────────────────┬──────────────────────────────┘
+                          │
+                          ▼
+┌────────────────────────────────────────────────────────┐
+│     AUTOMATED COMPLETION & STATUTORY PDF GENERATION    │
+│  ├─ Resignation Acceptance Letter                      │
+│  ├─ Clearance Certificate (NOC)                        │
+│  ├─ Relieving Letter (with Non-Compete Clauses)        │
+│  └─ Experience Certificate                             │
+└────────────────────────────────────────────────────────┘
+```
+
+---
+
+## ✨ Key Enterprise Features
+
+- **Generic DAG Workflow Engine**: Supports concurrent (`PARALLEL`) and dependency-gated (`SEQUENTIAL`) stage executions.
+- **Automated IT Deprovisioning**: 1-Click single/bulk access revocation for Google Workspace, Active Directory, AWS, VPN, and Slack.
+- **Standalone Server-Side PDFs (PDFKit)**: Generates official company letterhead documents directly on the backend with zero browser DOM/UI capture.
+- **Strict Role-Based Access Control (RBAC)**: Backend validates JWT signature (`req.user.role`). Stage approvals strictly verify that `stage.role === req.user.role`, returning **HTTP 403 Forbidden** for unauthorized attempts.
+- **Immutable Audit Trail**: Logs every action, stage transition, and credential revocation with timestamps and user metadata.
+
+---
+
+## 🧪 Run Automated Verification Tests
+
+```bash
+cd backend
+node test_verification.js
+```
+*Validates JWT authentication for all 8 roles, cross-role 403 Forbidden enforcement, stage approval security, and standalone PDFKit binary generation.*
+
+---
+
+## 🛠️ Technology Stack
+
+- **Frontend**: React 18, Vite, React Router v6, Lucide Icons, Vanilla CSS (Glassmorphic SaaS UI).
+- **Backend**: Node.js, Express.js (REST APIs, JWT, Error Middlewares).
+- **Database**: MongoDB with Mongoose (with automated in-memory fallback).
+- **Document Engine**: Server-side PDFKit binary streaming.
