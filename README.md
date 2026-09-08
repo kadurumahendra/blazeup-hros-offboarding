@@ -75,3 +75,10 @@ Project / Reporting Manager
                          │
                          ▼
                   Official Documents
+Workflow stages
+Level	Department	Execution	Purpose
+1	Project / Reporting Manager	Sequential	Project completion, knowledge transfer and handover
+2	Admin & Systems	Parallel	Assets, IT systems and access clearance
+2	Accounts	Parallel	Financial and account clearance
+2	Personnel	Parallel	ID cards, access cards and facilities
+3	HR Final Clearance	Sequential	Final employee exit approval
