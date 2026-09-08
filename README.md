@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # BlazeUp HROS - Employee Offboarding Automation System
 
 A production-ready, full-stack HR Operations platform featuring a **generic reusable workflow engine**, dynamic multi-stage clearances (**parallel + sequential executions with dependencies**), department-specific clearance checklists, access revocation simulator, immutable audit logs, and automated statutory PDF document generation (Resignation Acceptance, Clearance NOC, Relieving Letter, and Experience Certificate).
@@ -236,3 +237,6 @@ All seed accounts use the default password: **`Password123!`**
 
 ## 🛡️ License
 Built for BlazeUp HROS.
+=======
+# blazeup-hros-offboarding
+>>>>>>> d6ebda276378c87cb4667ddbdcd61288853d75a2
